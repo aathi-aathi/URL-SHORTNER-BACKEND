@@ -7,6 +7,7 @@ import loginRouter from './apis/login.js'
 import forgotPasswordRouter from './apis/forgot-password.js'
 import resetPasswordRouter from './apis/reset-password.js'
 import shortUrlRouter from './apis/short-url.js'
+import verifyRouter from './apis/verify.js'
 
 const app = express()
 app.use(express.json())
@@ -18,6 +19,7 @@ app.use('/login',loginRouter)
 app.use('/forgot-password',forgotPasswordRouter)
 app.use('/reset-password',resetPasswordRouter)
 app.use('/short-url',shortUrlRouter)
+app.use('/verify',verifyRouter)
 const port = 7302
 app.listen(port,()=>{
     console.log('port',port ,'running...')

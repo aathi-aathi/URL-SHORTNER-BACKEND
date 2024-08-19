@@ -23,6 +23,7 @@ registerRouter.post("/",async(req,res)=>{
                     await collection.insertOne({
                 ...userData,
                 password:hash,
+                isVerified:false,
                 longUrl:[],
                 shortUrl:[]
             })
