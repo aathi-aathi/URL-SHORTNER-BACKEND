@@ -38,7 +38,7 @@ registerRouter.post("/",async(req,res)=>{
                 to:userData.email,
                 subject:"Welome to Gmail",
                 text: `Please verify your account
-                http://localhost:5173/verify-account/${token}
+                ${process.env.FE_URL}/verify-account/${token}
                 `, 
               })
              res.send({msg:"registered successfully"})
