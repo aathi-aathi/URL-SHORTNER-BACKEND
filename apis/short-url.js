@@ -1,18 +1,18 @@
 import express from 'express'
 import { db } from '../mongodb/mongodb-connect.js'
+import dotenv from 'dotenv'
 import shortid from 'shortid'
+dotenv.config()
 const shortUrlRouter = express.Router()
-shortUrlRouter.get('/:email',async(req,res)=>{
-    const userdata = req.params
-   const data = await db.collection('users').findOne({email:userdata.email})
-    res.send(data)
-})
+
 shortUrlRouter.post('/',async(req,res)=>{
     const userData = req.body
-    const shortUrl = 'http://'+shortid.generate()
-    await db.collection('users').updateOne(
-        {email:userData.email},
-        {$push:{longUrl:userData.longUrl,shortUrl: shortUrl}})
+    const id = shortid.generate()
+    const shortUrl =`${req.protocol}://${req.get('host')}/${id}`
+    await db.collection('Urls').insertOne({
+        longUrl:userData.longUrl,
+        id:id,
+    })  
     res.send({shortUrl:shortUrl})
 })
 export default shortUrlRouter
