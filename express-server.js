@@ -2,12 +2,8 @@ import express from 'express'
 import connectToDb from './mongodb/mongodb-connect.js'
 import cors from 'cors'
 import registerRouter from './apis/register.js'
-import verifyUser from './apis/verify-account.js'
 import loginRouter from './apis/login.js'
-import forgotPasswordRouter from './apis/forgot-password.js'
-import resetPasswordRouter from './apis/reset-password.js'
 import shortUrlRouter from './apis/short-url.js'
-import verifyRouter from './apis/verify.js'
 import { db } from './mongodb/mongodb-connect.js'
 import checkOtpRouter from './apis/check-otp.js'
 import userInfo from './apis/userInfo.js'
@@ -27,12 +23,8 @@ app.get('/:id',async(req,res)=>{
     }
 })
 app.use('/user',registerRouter)
-app.use('/verify-account',verifyUser)
 app.use('/login',loginRouter)
-app.use('/forgot-password',forgotPasswordRouter)
-app.use('/reset-password',resetPasswordRouter)
 app.use('/short-url',shortUrlRouter)
-app.use('/verify',verifyRouter)
 app.use('/check-otp',checkOtpRouter)
 app.use('/get-info',userInfo)
 app.use('/url-list',urlList)
