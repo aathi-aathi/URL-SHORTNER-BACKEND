@@ -9,6 +9,9 @@ import resetPasswordRouter from './apis/reset-password.js'
 import shortUrlRouter from './apis/short-url.js'
 import verifyRouter from './apis/verify.js'
 import { db } from './mongodb/mongodb-connect.js'
+import checkOtpRouter from './apis/check-otp.js'
+import userInfo from './apis/userInfo.js'
+import urlList from './apis/url-list.js'
 const app = express()
 app.use(express.json())
 app.use(cors())
@@ -30,6 +33,9 @@ app.use('/forgot-password',forgotPasswordRouter)
 app.use('/reset-password',resetPasswordRouter)
 app.use('/short-url',shortUrlRouter)
 app.use('/verify',verifyRouter)
+app.use('/check-otp',checkOtpRouter)
+app.use('/get-info',userInfo)
+app.use('/url-list',urlList)
 const port = 7302
 app.listen(port,()=>{
     console.log('port',port ,'running...')

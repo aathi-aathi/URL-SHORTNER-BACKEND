@@ -10,9 +10,10 @@ registerRouter.post("/",async(req,res)=>{
     const userData = req.body
     const collection = db.collection("users")
     const userObj = await collection.findOne({email:userData.email})
+    const otp = Math.floor(1000 + Math.random() * 9000)
       try {
         if(userObj){
-            res.status(400).send({message:"User already exist",code:1})
+            res.status(400).send({message:"User already exist"})
         }
         else{
             bcrypt.hash(userData.password,10,async function(err,hash) {
@@ -24,8 +25,7 @@ registerRouter.post("/",async(req,res)=>{
                 ...userData,
                 password:hash,
                 isVerified:false,
-                longUrl:[],
-                shortUrl:[]
+                otp:otp
             })
             var token = jwt.sign(
                 {email: userData.email },
@@ -36,20 +36,17 @@ registerRouter.post("/",async(req,res)=>{
             await transporter.sendMail({
                 ...mailOptions,
                 to:userData.email,
-                subject:"Welome to Gmail",
+                subject:"Welome to Shortly",
                 text: `Please verify your account
-                ${process.env.FE_URL}/verify-account/${token}
+                 Hii ${userData.name}
+                 Your OTP is : ${otp}
                 `, 
               })
-             res.send({msg:"registered successfully"})
-    
+             res.send({msg:"registered successfully",token:token})
         }});
     } 
       } catch (error) {
         res.status(500).send({message:'Something went wrong'})
       }
-    
-
 })
-
 export default registerRouter
